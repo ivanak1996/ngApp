@@ -1,0 +1,19 @@
+<div class="pr-5 pl-5">
+  <div class="row mt-5">
+    <div class="col-md-4 mb-3" *ngFor="let pack of fairPacks">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">{{pack.Title}}</h5>
+          <div class="card-text">
+              <p *ngFor="let content of pack.Content">
+                {{content}}
+              </p>
+            </div>
+        </div>
+        <div class="card-footer text-muted">
+          {{pack.Price}} RSD
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

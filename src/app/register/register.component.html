@@ -1,0 +1,328 @@
+<div class="row pt-5 pb-5">
+  <div class="col-md-6 mx-auto">
+    <div class="card rounded-0">
+      <div class="card-header">
+        <h3 class="mb-0">Register</h3>
+      </div>
+      <div class="card-body">
+        <form class="form" #registerForm="ngForm">
+            <angular-file-uploader
+              [config]="afuConfig">
+            </angular-file-uploader>
+          <div class="form-group">
+            <label for="username">Username:</label>
+            <input
+              [(ngModel)]="registerUserData.username"
+              name="username"
+              id="username"
+              type="text" 
+              required 
+              #usernameControl="ngModel"
+              class="form-control rounded-0"
+              [class.is-invalid]="usernameControl.invalid && usernameControl.touched" 
+              [class.is-valid]="usernameControl.valid"
+            >
+            <div class="invalid-feedback" *ngIf="usernameControl.errors?.required && usernameControl.touched">
+              The username field is required
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input 
+              [(ngModel)]="registerUserData.email"
+              name="email"
+              id="email"
+              type="text" 
+              required 
+              #emailControl="ngModel"
+              class="form-control rounded-0"
+              [class.is-invalid]="emailControl.invalid && emailControl.touched" 
+              [class.is-valid]="emailControl.valid"
+              [email]="registerUserData.email!==''" 
+            >
+            <div class="invalid-feedback" *ngIf="emailControl.errors?.required && emailControl.touched">
+              The email field is required
+            </div>
+            <div class="invalid-feedback" *ngIf="emailControl.errors?.email && emailControl.touched">
+              Email format is invalid
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input 
+              [(ngModel)]="registerUserData.password"
+              name="password"
+              id="password"
+              type="password" 
+              required 
+              #passwordControl="ngModel"
+              class="form-control rounded-0"
+              [class.is-invalid]="passwordControl.invalid && passwordControl.touched" 
+              [class.is-valid]="passwordControl.valid"
+              pattern="(?=.*\d)(?=.*[a-z])(?=.*[a-z])(?=.*[a-z])(?=.*[A-Z])(?=.*[\.,@#$%]).{8,}"
+            >
+            <div class="invalid-feedback" *ngIf="passwordControl.errors?.required && passwordControl.touched">
+              The password field is required
+            </div>
+            <div class="invalid-feedback" *ngIf="passwordControl.errors?.pattern && passwordControl.touched">
+              The password has to contain between 8 and 12 characters, at least: 1 uppercase letter, 3 lowercase 
+              letters, 1 number and 1 special character (#*.!?$). First character has to be a letter, uppercase 
+              or lowercase, and two same characters in row are forbidden.
+            </div>
+            <!--
+                треба да има најмање 8 карактера, а највише 12 карактера. Минималан
+                број великих слова је 1, минималан број малих слова је 3, минималан број нумерика је 1 и минималан
+                број специјалних знакова из скупа (#*.!?$) је 1. Почетни карактер мора бити слово, мало или велико.
+                Не смеју се наћи два узастопна иста знака.
+            -->
+          </div>
+          <div class="pt-3 pb-3">
+            <label class="radio-inline pr-3"><input type="radio" name="userType" checked (change)="setIsStudent(true)">  student</label>
+            <span></span>
+            <label class="radio-inline"><input type="radio" name="userType" (change)="setIsStudent(false)"> company</label>
+          </div>
+          <ng-container *ngIf="isStudent">
+            <!--<app-register-student [model]="registerUserData"></app-register-student>-->
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="firstName">First Name:</label>
+                  <input 
+                    [(ngModel)]="registerUserData.firstName"
+                    name="firstName"
+                    id="firstName"
+                    type="text" 
+                    required 
+                    #firstNameControl="ngModel"
+                    class="form-control rounded-0"
+                    [class.is-invalid]="firstNameControl.invalid && firstNameControl.touched" 
+                    [class.is-valid]="firstNameControl.valid"
+                  >
+                  <div class="invalid-feedback" *ngIf="firstNameControl.errors?.required && firstNameControl.touched">
+                    The first name field is required
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="lastName">Last Name:</label>
+                  <input 
+                    [(ngModel)]="registerUserData.lastName"
+                    name="lastName"
+                    id="lastName"
+                    type="text" 
+                    required 
+                    #lastNameControl="ngModel"
+                    class="form-control rounded-0"
+                    [class.is-invalid]="lastNameControl.invalid && lastNameControl.touched" 
+                    [class.is-valid]="lastNameControl.valid"
+                  >
+                  <div class="invalid-feedback" *ngIf="lastNameControl.errors?.required && lastNameControl.touched">
+                    The last name field is required
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="university">University:</label>
+              <input 
+                [(ngModel)]="registerUserData.university"
+                name="university"
+                id="university"
+                type="text" 
+                required 
+                #universityControl="ngModel"
+                class="form-control rounded-0"
+                [class.is-invalid]="universityControl.invalid && universityControl.touched" 
+                [class.is-valid]="universityControl.valid"
+              >
+              <div class="invalid-feedback" *ngIf="universityControl.errors?.required && universityControl.touched">
+                The University field is required
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="year">Year of Studies:</label>
+              <input 
+                [(ngModel)]="registerUserData.year"
+                name="year"
+                id="year"
+                type="number" 
+                required 
+                #yearControl="ngModel"
+                class="form-control rounded-0"
+                [class.is-invalid]="yearControl.invalid && yearControl.touched" 
+                [class.is-valid]="yearControl.valid"
+                pattern="[1-9]"
+              >
+              <div class="invalid-feedback" *ngIf="yearControl.errors?.required && yearControl.touched">
+                The year of studies field is required
+              </div>
+              <div class="invalid-feedback" *ngIf="yearControl.errors?.pattern && yearControl.touched">
+                Year of studies value is invalid
+              </div>
+            </div>
+            
+          </ng-container>
+          <ng-container *ngIf="!isStudent">
+            <!--<app-register-company [model]="registerUserData"></app-register-company>-->
+            <div class="form-group">
+              <label for="name">Company Name:</label>
+              <input 
+                [(ngModel)]="registerUserData.companyName"
+                name="companyName"
+                id="companyName"
+                type="text" 
+                required 
+                #companyNameControl="ngModel"
+                class="form-control rounded-0"
+                [class.is-invalid]="companyNameControl.invalid && companyNameControl.touched" 
+                [class.is-valid]="companyNameControl.valid"
+              >
+              <div class="invalid-feedback" *ngIf="companyNameControl.errors?.required && companyNameControl.touched">
+                The company name field is required
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="name">Company Address:</label>
+              <input 
+                [(ngModel)]="registerUserData.companyAddress"
+                name="companyAddress"
+                id="companyAddress"
+                type="text" 
+                required 
+                #companyAddressControl="ngModel"
+                class="form-control rounded-0"
+                [class.is-invalid]="companyAddressControl.invalid && companyAddressControl.touched" 
+                [class.is-valid]="companyAddressControl.valid"
+              >
+              <div class="invalid-feedback" *ngIf="companyAddressControl.errors?.required && companyAddressControl.touched">
+                The company address field is required
+              </div>
+              <label for="name">Company Address:</label>
+              <input 
+                [(ngModel)]="registerUserData.city"
+                name="city"
+                id="city"
+                type="text" 
+                required 
+                #cityControl="ngModel"
+                class="form-control rounded-0"
+                [class.is-invalid]="cityControl.invalid && cityControl.touched" 
+                [class.is-valid]="cityControl.valid"
+              >
+              <div class="invalid-feedback" *ngIf="cityControl.errors?.required && cityControl.touched">
+                The city field is required
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="firstName">CEO First Name:</label>
+                  <input 
+                    [(ngModel)]="registerUserData.ceoFirstName"
+                    name="ceoFirstName"
+                    id="ceoFirstName"
+                    type="text" 
+                    required 
+                    #ceoFirstNameControl="ngModel"
+                    class="form-control rounded-0"
+                    [class.is-invalid]="ceoFirstNameControl.invalid && ceoFirstNameControl.touched" 
+                    [class.is-valid]="ceoFirstNameControl.valid"
+                  >
+                  <div class="invalid-feedback" *ngIf="ceoFirstNameControl.errors?.required && ceoFirstNameControl.touched">
+                    The CEO's first name field is required
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="lastName">CEO Last Name:</label>
+                  <input 
+                    [(ngModel)]="registerUserData.ceoLastName"
+                    name="ceoLastName"
+                    id="ceoLastName"
+                    type="text" 
+                    required 
+                    #ceoLastNameControl="ngModel"
+                    class="form-control rounded-0"
+                    [class.is-invalid]="ceoLastNameControl.invalid && ceoLastNameControl.touched" 
+                    [class.is-valid]="ceoLastNameControl.valid"
+                  >
+                  <div class="invalid-feedback" *ngIf="ceoLastNameControl.errors?.required && ceoLastNameControl.touched">
+                    The CEO's last name field is required
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="pib">PIB:</label>
+                  <input 
+                    [(ngModel)]="registerUserData.pib"
+                    name="pib"
+                    id="pib"
+                    type="number" 
+                    required 
+                    #pibControl="ngModel"
+                    class="form-control rounded-0"
+                    [class.is-invalid]="pibControl.invalid && pibControl.touched" 
+                    [class.is-valid]="pibControl.valid"
+                  >
+                  <div class="invalid-feedback" *ngIf="pibControl.errors?.required && pibControl.touched">
+                    The PIB field is required
+                  </div>
+            </div>
+            <div class="form-group">
+              <label for="expertise">Expertise:</label>
+              <select
+                [(ngModel)]="registerUserData.expertise"
+                name="expertise"
+                id="expertise"
+                required
+                #expertiseControl="ngModel"
+                class="form-control rounded-0"
+                [class.is-invalid]="expertiseControl.invalid && expertiseControl.touched" 
+                [class.is-valid]="expertiseControl.valid"
+              >
+                  <option value="Information Technologies">Information Technologies</option>
+                  <option value="Electrical Engineering">Electrical Engineering</option>
+                  <option value="Management">Management</option>
+                </select>
+                <div class="invalid-feedback" *ngIf="expertiseControl.errors?.required && expertiseControl.touched">
+                  The Expertise field is required
+                </div>
+            </div>
+            <div class="form-group">
+              <label for="employees">Number of Employees:</label>
+              <input 
+                [(ngModel)]="registerUserData.employeesNum"
+                name="employeesNum"
+                id="employeesNum"
+                type="number" 
+                required 
+                #employeesNumControl="ngModel"
+                class="form-control rounded-0"
+                [class.is-invalid]="employeesNumControl.invalid && employeesNumControl.touched" 
+                [class.is-valid]="employeesNumControl.valid"
+                pattern="[1-9][0-9]*"
+              >
+              <div class="invalid-feedback" *ngIf="employeesNumControl.errors?.required && employeesNumControl.touched">
+                The Number of Employees field is required
+              </div>
+              <div class="invalid-feedback" *ngIf="employeesNumControl.errors?.pattern && employeesNumControl.touched">
+                Number of Employees value is invalid
+              </div>
+            </div>
+          </ng-container>
+          <button
+            (click)="register()" 
+            type="submit" 
+            class="btn btn-primary float-right"
+            [disabled]="registerForm.invalid"
+          >
+            Register
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,83 @@
+<div class="pr-5 pl-5">
+  <div class="row pt-5">
+      <div class="col-md-2">
+        <input
+          class="form-control"
+          name="company"
+          id="company"
+          type="text"
+          placeholder="company"
+          [(ngModel)]="company"
+        >
+      </div>
+      <div class="col-md-2">
+        <input
+          class="form-control"
+          name="title"
+          id="title"
+          type="text"
+          placeholder="title"
+          [(ngModel)]="title"
+        >
+      </div>
+      <div class="col-md-2 pt-2">
+        <div class="row">
+          <div class="col-md-4">
+              <input type="checkbox" [(ngModel)]="jobCheckbox" checked>job
+          </div>
+          <div class="col-md-8">
+              <input type="checkbox" [(ngModel)]="internshipCheckbox" checked> internship
+          </div>
+      </div>
+      </div>
+      <div class="col-md-3">
+        <button type="button" class=" btn btn-primary" (click)="search()">
+          <fa name="search" size="lg"></fa> Search
+        </button>
+      </div>
+  </div>
+  <!--
+  <div class="row">
+      <button type="button" class=" btn btn-link" (click)="search()">Reset</button>
+  </div>
+  -->
+  <div class="row mt-5">
+    <div class="col-md-12 mb-3" *ngFor="let offer of filteredJobOffers">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title"><a href="javascript:void(0);" (click)="redirectToJobOffer(offer._id)"> {{offer.title}}</a></h5>
+          <p class="text-shadow" style="text-shadow: 1px 1px #737373 ">
+              <a href="javascript:void(0);" (click)="redirectToCompany(offer.companyName)">{{offer.companyName}}</a>
+          </p>
+          <div class="card-text">
+              <p style="text-align: justify">
+                {{offer.description}}
+              </p>
+            </div>
+            <div class="row">
+            <div class="col-md-6 text-muted">
+              <button type="button" class="btn btn-light">Apply Now</button>
+            </div>
+            <div class="col-md-6 text-muted text-right">
+                open until <b>{{convertDateTime(offer.openUntil)}}</b>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--<div class="card text-center">
+  <div class="card-body">
+    <h5 class="card-title">{{offer.title}}</h5>
+    <div class="card-text">
+        <p style="text-align: justify">
+          {{trimDescriptionString(offer.description)}}
+        </p>
+      </div>
+  </div>
+  <div class="card-footer text-muted">
+    open until <b>{{convertDateTime(offer.openUntil)}}</b>
+  </div>
+</div>-->

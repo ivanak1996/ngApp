@@ -1,0 +1,60 @@
+<div class="pr-5 pl-5">
+  <div class="row mt-5">
+    <ng-multiselect-dropdown
+      class="col-md-4"
+      [placeholder]="'companies activities'"
+      [data]="dropdownList"
+      [(ngModel)]="selectedItems"
+      [settings]="dropdownSettings"
+      (onSelect)="onItemSelect($event)"
+      (onSelectAll)="onSelectAll($event)"
+    >
+    </ng-multiselect-dropdown>
+    <div class="col-md-3">
+      <input
+        class="form-control"
+        name="company"
+        id="company"
+        type="text"
+        placeholder="Company name"
+        [(ngModel)]="companyName"
+      >
+    </div>
+    <div class="col-md-3">
+      <input
+        class="form-control"
+        name="city"
+        id="city"
+        type="text"
+        placeholder="Company city"
+        [(ngModel)]="city"
+      >
+    </div>
+    <div class="col-md-2">
+      <button type="button" class=" btn btn-primary" (click)="applyFilter()">
+        <fa name="search" size="lg"></fa> Search
+      </button>
+    </div>
+  </div>
+</div>
+<br>
+<hr>
+<div class="pr-5 pl-5">
+    <div class="row mt-5">
+      <div class="col-md-4 mb-3" *ngFor="let company of filteredCompanies">
+        <div class="card text-center">
+          <div class="card-body" style="align-items: center">
+                <img src="{{company.imageURL}}" class="img-rounded" width="100px" height="100px">
+              
+                <h3>{{company.company.name}}</h3>
+                <h4>{{company.email}}</h4>
+                <p>{{company.company.address}}</p>
+                <p>{{company.company.city}}</p>
+          </div>
+          <div class="card-footer text-muted">
+            <p>{{company.company.expertise}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
